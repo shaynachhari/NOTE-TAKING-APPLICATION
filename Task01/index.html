@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Table Task1</title>
+    <script
+      src="https://unpkg.com/react@18/umd/react.development.js"
+      crossorigin
+    ></script>
+    <script
+      src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+      crossorigin
+    ></script>
+    <script src="https://unpkg.com/babel-standalone@6.26.0/babel.js"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        border-spacing: 0;
+      }
+      td {
+        border: 1px solid black;
+      }
+      input {
+        width: 100%;
+        box-sizing: border-box;
+        border: none;
+        padding: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+      const App = () => {
+        const [tableData, setTableData] = React.useState(
+          Array(15)
+            .fill()
+            .map((_, rowIndex) =>
+              Array(6)
+                .fill("")
+                .map((_, colIndex) =>
+                  colIndex === 0 ? `Row ${rowIndex + 1} Data` : ""
+                )
+            )
+        );
+
+        const handleInputChange = (e, rowIndex, colIndex) => {
+          const newTableData = [...tableData];
+          newTableData[rowIndex][colIndex] = e.target.value;
+          setTableData(newTableData);
+        }; 
+        
+
+        const handleSubmit = () => {
+          // fetch(' ', { 
+          //     method: 'POST',
+          //     headers: {
+          //         'Content-Type': 'application/json',
+          //     },
+          //     body: JSON.stringify(newTableData),
+          // })
+          // .then(response => response.json())
+          // .then(data => console.log('Success:', data))
+          // .catch((error) => console.error('Error:', error));
+        };
+
+        return (
+          <div>
+            <table>
+              <tbody>
+                {tableData.map((row, rowIndex) => (
+                  <tr key={rowIndex}>
+                    {row.map((cell, colIndex) => (
+                      <td key={colIndex}>
+                        <input
+                          type="text"
+                          value={cell}
+                          onChange={(e) =>
+                            handleInputChange(e, rowIndex, colIndex)
+                          }
+                        />
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <br />
+            <button onClick={handleSubmit}>Submit</button>
+          </div>
+        );
+      };
+
+      ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+    </script>
+  </body>
+</html>
