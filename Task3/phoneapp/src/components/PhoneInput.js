@@ -5,17 +5,17 @@ const PhoneInput = ({ onSubmit }) => {
   const [phonenumber, setPhonenumber] = useState("");
 
   const handleSubmit = async () => {
-    if (!phonenumber) {
-      alert("Please enter a phone number");
+    if (!phonenumber || phonenumber.length !== 10 || !phonenumber) {
+      alert("Please enter a valid 10-digit phone number");
       return;
     }
 
     try {
-      const response = await axios.post("https://chimpu.online/api/post.php", {
+      const response = await axios.post("http://localhost:5000/api/send-phone", {
         phonenumber,
       });
-      console.log("Response Headers:", response.headers);
-      onSubmit(response.headers);
+      console.log("Response Headers:", response.data.headers);
+      onSubmit(response.data.headers); 
     } catch (error) {
       console.error("Error:", error);
       onSubmit(null, "Error fetching data.");

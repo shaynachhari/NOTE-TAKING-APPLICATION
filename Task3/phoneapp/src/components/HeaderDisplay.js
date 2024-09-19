@@ -5,17 +5,24 @@ const HeaderDisplay = ({ headers, errorMessage }) => {
     return <p style={{ color: "red" }}>{errorMessage}</p>;
   }
   if (!headers) {
-    return ;
+    return null; 
   }
 
-  const headerString = Object.entries(headers)
-    .map(([key, value]) => `${key}: ${value}`)
-    .join("\n");
+  const {
+    "content-length": contentLength,
+    "content-type": contentType,
+    phoneorigen
+  } = headers;
 
   return (
     <div>
       <h2>Received Headers</h2>
-      <pre>{headerString}</pre>
+      <pre>
+        {`Content-Length: ${contentLength || "Not provided"}
+Content-Type: ${contentType || "Not provided"}
+PhoneOrigin: ${phoneorigen || "Not provided"}
+`}
+      </pre>
     </div>
   );
 };
